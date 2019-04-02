@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Haba</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static '../css/custom.css' %}"> </head> 
+    
+    <body>
+
+    <!--Sidebar-->
+    <section class="section">
+        <div class="columns">
+            <div class="column is-4-tablet is-3-desktop is-2-widescreen ">
+                    <aside class="menu">
+
+                        <p class="menu-label ">
+                            GENERAL
+                        </p>
+                        
+                        <ul class="menu-list">
+                            <li>
+                                <a class="is-active" href="dashboard.html"><span class="icon ">
+                                        <i class="fa fa-tachometer"></i>
+                                    </span>Create Chama</a>
+                            </li>
+                            
+                            <li>
+                                <a href="customers.html">
+                                    <span class="icon">
+                                        <i class="fa fa-address-book"></i>
+                                    </span>
+                                    All Chamas
+                                </a>
+                            </li>
+                            
+                        </ul>
+                      
+                        <p class="menu-label ">
+                            MY ACCOUNT
+                        </p>
+                        <ul class="menu-list ">
+                             <li>
+                                <a href="authentication.html"><span class="icon ">
+                                        <i class="fa fa-lock"></i>
+                                    </span>Log out</a>
+                            </li>
+                           
+                        </ul>
+                    </aside>
+                
+            </div>
+
+            {% block content %}
+            <!--Content goes here-->
+            {% endblock %}
+        </div>
+    </section>
+    <!--End sidebar-->
+    
+
+    </body>
+
+</html>

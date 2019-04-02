@@ -1,0 +1,145 @@
+{% extends 'chama/base_view.html' %}
+
+{% block content  %}
+
+<div class="column">
+
+    <!--My accounts section-->
+
+    <div class=" column has-text-left is-size-4 ">
+        <p>My Account Summary</p>
+    </div>
+
+    <div class="columns is-multiline">
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+            <div class="notification is-link has-text">
+                <p class="title is-1">23</p>
+                <p class="subtitle is-4">Orders</p>
+            </div>
+        </div>
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+            <div class="notification is-info has-text">
+                <p class="title is-1">12</p>
+                <p class="subtitle is-4">My Chamas</p>
+            </div>
+        </div>
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+            <div class="notification is-danger has-text">
+                <p class="title is-1">$1,678</p>
+                <p class="subtitle is-4">My Loans</p>
+            </div>
+        </div>
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+            <div class="notification is-success has-text">
+                <p class="title is-1">$20,756</p>
+                <p class="subtitle is-4">My Savings</p>
+            </div>
+        </div>
+    </div>
+    <!--End my accounts-->
+    <div class="tabs is-toggle is-medium is-fullwidth">
+        <ul>
+            <li class="is-active"><a>My Chamas</a></li>
+            <li><a>Recent Transactions</a></li>
+
+        </ul>
+    </div>
+
+    <!--My chamas section-->
+    <div class="columns is-multiline " id="my-chamas" >
+        <div class="column is-12-tablet is-6-desktop is-4-widescreen is-flex-mobile">
+            <div class="card">
+                <div class="card-content">
+                    <h2 class="title is-4">
+                        Joyful Womens Group
+                    </h2>
+                    <div class="level">
+                        <div class="level-left">
+                            <div>
+                                <p class="title is-5 has-text-weight-normal is-marginless">
+                                    Net Asset Value: <span class="has-text-primary"> KES 2000,000.00</span>
+                                </p>
+                                <p>
+                                        <strong>20</strong> Members
+                                </p>
+                                    
+                                
+                            </div>
+                        </div>
+                        <div class="level-right">
+                            <div class="has-text-right">
+                                <span class="tag is-danger">My Loan</span>
+                                <p class="title is-5 is-marginless">
+                                    $56.98
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="button is-link is-outlined" href="orders.html">See More</a>
+                </div>
+            </div>
+        </div>   
+        
+    </div>
+    
+    
+
+    <!--End my chamas section-->
+
+    <!--Recent Transactions-->
+    <div class="column is-hidden">
+            <table class="table is-hoverable is-fullwidth">
+                    <thead>
+                      <tr>
+                        <th>Transaction #</th>
+                        <th>Chama</th>
+                        <th>Date</th>
+                        <th>In Payment Of</th>
+                        <th class="has-text-right">Amount</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                            <th>Transaction #</th>
+                            <th>Chama</th>
+                            <th>Date</th>
+                            <th>In Payment Of</th>
+                            <th class="has-text-right">Amount</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>MNDHKW7942</strong>
+                        </td>
+                        <td>
+                          <a href="edit-customer.html">Feminists United</a>
+                        </td>
+                        <td>Nov 18, 17:38</td>
+                        <td>
+                          <span class="tag is-warning">Fine</span>
+                        </td>
+                        <td class="has-text-right">$56.98</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>MNS85308HR5</strong>
+                        </td>
+                        <td>
+                          <a href="edit-customer.html">Mafisi Sacco</a>
+                        </td>
+                        <td>Nov 16, 11:45</td>
+                         <td>
+                          <span class="tag is-success">Contribution</span>
+                        </td>
+                        <td class="has-text-right">$21.99</td>
+                      </tr>
+                    </tbody>
+        </table>
+    </div>
+
+    <!--End recent transactions-->
+
+</div>
+
+{% endblock  %}

@@ -1,0 +1,118 @@
+{% extends 'chama/base_site.html' %}
+
+{% block content  %}
+<section class="hero is-fullheight has-background-white">
+    <div class="hero-body">
+        <div class="container">
+
+            <div class="columns">
+                <div class="column content is-two-fifths">
+                    <p class="is-size-4 has-text-primary">
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Etiam id neque vehicula.
+                    </p>
+
+                    <p class="is-size-4 has-text-primary">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Etiam id neque vehicula, pellentesque elit id, auctor erat.
+                            Mauris interdum quam vel arcu dictum.   
+                           
+                        </p>
+                </div>
+                <div class="column is-two-fifths is-offset-1">
+
+                    <div class=" column has-text-left">
+                        <p class="is-size-4 has-text-primary">
+                            Enter your details below to create an account:
+                        </p>
+
+                    </div>
+
+                    <!--In case of error messages-->
+                    {% if signinform.errors %}
+                    {% for field in signinform %}
+                    {% for error in field.errors %}
+                    <p class="help is-danger">{{ error|escape }}</p>
+
+
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in signinform.non_field_errors %}
+                    <p class="help is-danger">{{ error|escape }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    <!--End error control-->
+
+                    <form class="box" action="" method="POST">
+                        {% csrf_token %}
+
+                        <div class="field">
+                            <label class="label" for="id_email">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-primary" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="id_email">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-primary" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="id_email">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-primary" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="field">
+                            <label class="label" for="id_email">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-primary" type="email" placeholder="Email">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="field">
+                            <label class="label" for="">Password</label>
+                            <p class="control has-icons-left">
+                                <input class="input is-primary" type="password" placeholder="Password">
+                                <span class="icon is-small is-left">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <div class="buttons">
+                            <span class="button is-success is-large is-fullwidth">
+                                Register
+                            </span>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock  %}
