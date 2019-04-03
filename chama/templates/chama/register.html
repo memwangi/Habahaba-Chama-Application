@@ -1,19 +1,20 @@
 {% extends 'chama/base_site.html' %}
 
 {% block content  %}
+{% load bulma_tags %}
 <section class="hero is-fullheight has-background-white">
     <div class="hero-body">
         <div class="container">
 
             <div class="columns">
                 <div class="column content is-two-fifths">
-                    <p class="is-size-4 has-text-primary">
+                    <p class="is-size-4 has-text-grey-darker">
 
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Etiam id neque vehicula.
                     </p>
 
-                    <p class="is-size-4 has-text-primary">
+                    <p class="is-size-4 has-text-grey-darker">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Etiam id neque vehicula, pellentesque elit id, auctor erat.
                             Mauris interdum quam vel arcu dictum.   
@@ -23,7 +24,7 @@
                 <div class="column is-two-fifths is-offset-1">
 
                     <div class=" column has-text-left">
-                        <p class="is-size-4 has-text-primary">
+                        <p class="is-size-4 has-text-grey-darker">
                             Enter your details below to create an account:
                         </p>
 
@@ -46,67 +47,13 @@
 
                     <form class="box" action="" method="POST">
                         {% csrf_token %}
-
+                        {{ form|bulma }}
                         <div class="field">
-                            <label class="label" for="id_email">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-primary" type="email" placeholder="Email">
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                            </div>
-
+                            <button type="submit" class="button is-primary is-medium is-fullwidth"> <a href="{% url 'register' %}">Register</a> </button>
                         </div>
+                        {% comment %} <input type="hidden" name="next" value="{{ next }}"/> {% endcomment %}
 
-                        <div class="field">
-                            <label class="label" for="id_email">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-primary" type="email" placeholder="Email">
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                            </div>
-
-                        </div>
-
-                        <div class="field">
-                            <label class="label" for="id_email">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-primary" type="email" placeholder="Email">
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                            </div>
-                        </div>
-
-
-                        <div class="field">
-                            <label class="label" for="id_email">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                                <input class="input is-primary" type="email" placeholder="Email">
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-envelope"></i>
-                                </span>
-                            </div>
-                        </div>
-
-
-                        <div class="field">
-                            <label class="label" for="">Password</label>
-                            <p class="control has-icons-left">
-                                <input class="input is-primary" type="password" placeholder="Password">
-                                <span class="icon is-small is-left">
-                                    <i class="fa fa-lock"></i>
-                                </span>
-                            </p>
-
-                        </div>
-
-                        <div class="buttons">
-                            <span class="button is-success is-large is-fullwidth">
-                                Register
-                            </span>
-                        </div>
+                        
                     </form>
 
 
