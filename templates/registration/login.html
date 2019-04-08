@@ -23,8 +23,7 @@
                     {% if user.is_authenticated %}
                     <p>Your account doesn't have access to this page. To proceed,
                         please login with an account that has access.</p>
-                    {% else %}
-                    <p>Please login to see this page.</p>
+                    
                     {% endif %}
                     {% endif %}
                     <!--End error control-->
@@ -43,7 +42,7 @@
                     
 
                     <div class="level">
-                        <p class="is-pulled-right"><a href="{% url 'password_reset' %}">Lost password?</a></p>
+                        <p class="is-pulled-right"><a href="{% url 'password_reset' %}">Forgot password?</a></p>
                         <p class="is-pulled-left"> <a href="{% url 'register' %}">Register</a> </p>
 
                     </div>

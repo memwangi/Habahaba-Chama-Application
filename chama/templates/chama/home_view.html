@@ -7,7 +7,7 @@
     <!--My accounts section-->
 
     <div class=" column has-text-left is-size-4 ">
-        <p>My Account Summary</p>
+        <p>Hello {{ request.user.phone_number}} Account Summary</p>
     </div>
 
     <div class="columns is-multiline">
@@ -45,49 +45,8 @@
         </ul>
     </div>
 
-    <!--My chamas section-->
-    <div class="columns is-multiline " id="my-chamas" >
-        <div class="column is-12-tablet is-6-desktop is-4-widescreen is-flex-mobile">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="title is-4">
-                        Joyful Womens Group
-                    </h2>
-                    <div class="level">
-                        <div class="level-left">
-                            <div>
-                                <p class="title is-5 has-text-weight-normal is-marginless">
-                                    Net Asset Value: <span class="has-text-primary"> KES 2000,000.00</span>
-                                </p>
-                                <p>
-                                        <strong>20</strong> Members
-                                </p>
-                                    
-                                
-                            </div>
-                        </div>
-                        <div class="level-right">
-                            <div class="has-text-right">
-                                <span class="tag is-danger">My Loan</span>
-                                <p class="title is-5 is-marginless">
-                                    $56.98
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="button is-link is-outlined" href="orders.html">See More</a>
-                </div>
-            </div>
-        </div>   
-        
-    </div>
-    
-    
-
-    <!--End my chamas section-->
-
     <!--Recent Transactions-->
-    <div class="column is-hidden">
+    <div class="column">
             <table class="table is-hoverable is-fullwidth">
                     <thead>
                       <tr>

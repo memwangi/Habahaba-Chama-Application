@@ -48,10 +48,11 @@
                     <form class="box" action="" method="POST">
                         {% csrf_token %}
                         {{ form|bulma }}
-                        <div class="field">
+                        {% comment %} <div class="field">
                             <button type="submit" class="button is-primary is-medium is-fullwidth"> <a href="{% url 'register' %}">Register</a> </button>
-                        </div>
-                        {% comment %} <input type="hidden" name="next" value="{{ next }}"/> {% endcomment %}
+                        </div> {% endcomment %}
+                        <input type="submit" class="button is-link is-medium is-fullwidth has-text-white" value="register">
+                        
 
                         
                     </form>

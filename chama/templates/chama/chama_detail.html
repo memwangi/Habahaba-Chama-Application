@@ -2,36 +2,49 @@
 
 {% block content %}
 
-<div class="column">
+<div class="column is-8">
 
 
-    <div class="column">
-        <p class="title is-4-mobile">Mapato Investment Group</p>
+    <div class="column  is-6-tablet is-6-desktop is-6-widescreen">
+        <p class="title is-4-mobile">{{ chama.groupName }} {{ chama.pk }}</p>
+        
+        <div class="buttons">
+        <button class="button is-link is-right"> <a class=" has-text-white"
+                        href="{% url 'pay' chama.pk %}">Make Payment</a> </button>
+        <button class="button is-link is-left"> <a class=" has-text-white"
+                        href="{% url 'add-member' chama.id %}">Add Member</a> </button>
+           
+        </div>
+        
+        {%for i in chama.object.members.all%}
+            {{i}}
+        {%endfor%}
     </div>
-
-    <div class="columns is-multiline">
-        <div class="column is-6-tablet is-6-desktop is-6-widescreen">
+    
+    <hr>
+    <div class="columns is-multiline is-mobile">
+        <div class="column is-6-mobile is-6-tablet is-6-desktop is-6-widescreen">
             <div class=" has-text">
                 <p class="tag is-medium is-success">Current Balance</p>
                 <p class="title is-medium has-text-black-ter">KES 2,506,567</p>
 
             </div>
         </div>
-        <div class="column is-6-tablet is-6-desktop is-6-widescreen">
+        <div class="column is-6-mobile is-6-tablet is-6-desktop is-6-widescreen">
             <div class="has-text">
                 <p class="tag is-medium is-warning">Members</p>
                 <p class="title is-medium has-text-black-ter">12</p>
 
             </div>
         </div>
-        <div class="column is-6-tablet is-6-desktop is-6-widescreen">
+        <div class="column is-6-mobile is-6-tablet is-6-desktop is-6-widescreen">
             <div class="has-text">
                 <p class="tag is-medium is-primary">Assets</p>
                 <p class="title is-medium has-text-black-ter">KES 3,678,000</p>
 
             </div>
         </div>
-        <div class="column is-6-tablet is-6-desktop is-6-widescreen">
+        <div class="column is-6-mobile is-6-tablet is-6-desktop is-6-widescreen">
             <div class="has-text">
                 <p class="tag is-medium is-danger">Liabilities</p>
                 <p class="title is-medium has-text-black-ter">KES 965,000</p>
@@ -40,17 +53,18 @@
         </div>
     </div>
 
-
+    <hr>
+    
     <div class="tabs is-boxed is-medium is-fullwidth is-offset-1">
         <ul>
+            <li ><a>Recent Transactions</a></li>
             <li class="is-active"><a>Members</a></li>
-            <li><a>Make Payment</a></li>
-            <li><a>Request Loan</a></li>
+            
 
         </ul>
     </div>
-
-    <div class="column ">
+    
+    <div class="column is-hidden">
         <!--A group member-->
         <div class="column is-12-tablet is-6-desktop is-4-fullhd">
             <div class="card">
@@ -91,6 +105,7 @@
         </div>
         <!--End group member-->
 
+    </div>
     </div>
 
     {% endblock  %}

@@ -14,10 +14,17 @@
     <body>
 
     <!--Sidebar-->
-    <section class="section">
+    <section class=" section">
         <div class="columns">
-            <div class="column is-4-tablet is-3-desktop is-2-widescreen ">
+            <div class="column is-4-tablet is-3-desktop is-2-widescreen">
                     <aside class="menu">
+                        <a class=" input button is-outlined is-medium is-fullwidth is-link" href=" {% url 'home' %} ">Home</a>
+                        {% if user.is_authenticated %}
+
+                        <p class="menu-label ">
+                            {{ user.Chama }}
+                        </p>
+                        {% endif %}
 
                         <p class="menu-label ">
                             GENERAL
@@ -25,17 +32,17 @@
                         
                         <ul class="menu-list">
                             <li>
-                                <a class="is-active" href="dashboard.html"><span class="icon ">
+                                <a class="is-active" href={% url 'create-chama' %}><span class="icon ">
                                         <i class="fa fa-tachometer"></i>
                                     </span>Create Chama</a>
                             </li>
                             
                             <li>
-                                <a href="customers.html">
+                                <a href={% url 'my-chamas' %}>
                                     <span class="icon">
                                         <i class="fa fa-address-book"></i>
                                     </span>
-                                    All Chamas
+                                    My Chamas
                                 </a>
                             </li>
                             

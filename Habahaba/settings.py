@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'django_daraja',
     'chama',
     'bulma',
+    'djmoney',
 ]
 
 AUTH_USER_MODEL = 'chama.Member'

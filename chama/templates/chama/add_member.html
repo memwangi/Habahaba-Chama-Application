@@ -1,0 +1,30 @@
+{% extends 'chama/base_view.html' %}
+
+{% block content %}
+{% load bulma_tags %}
+
+
+<div class="container">
+  <div class="columns">
+
+    
+      <div class="column content is-two-fifths is-offset-one-fifth">
+      <p> Enter the users number below. They should already have an active Haba account.</p>
+
+      <form action="" method="POST">
+          {% csrf_token %}
+          {{ form|bulma }}
+          <div class="buttons">
+            <input type="submit" class="button is-link is-medium has-text-white" value="Submit">
+            <button class="button is-primary is-medium is-right"> <a class=" has-text-white" href="{% url 'chama_detail' key %}">Cancel</a> </button>
+           
+            
+            
+          </div>
+          
+      </form>
+
+    </div>
+    </div>
+  </div>
+{% endblock  %}
