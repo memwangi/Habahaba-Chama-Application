@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     'chama',
     'bulma',
     'djmoney',
+    'django_simple_bulma',
 ]
 
 AUTH_USER_MODEL = 'chama.Member'
@@ -165,6 +166,39 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# Bulma settings
+
+BULMA_SETTINGS = {
+    "extensions": [
+        "bulma-accordion",
+        "bulma-calendar",
+    ],
+    "variables": {
+        "primary": "#000000",
+        "size-1": "6rem",
+    }
+}
 
 LOGIN_REDIRECT_URL = '/'
+
+STATICFILES_FINDERS = [
+  # First add the two default Finders, since this will overwrite the default.
+  'django.contrib.staticfiles.finders.FileSystemFinder',
+  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+
+  # Now add our custom SimpleBulma one.
+  'django_simple_bulma.finders.SimpleBulmaFinder',
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass

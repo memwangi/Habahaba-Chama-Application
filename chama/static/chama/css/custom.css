@@ -10,3 +10,8 @@
 .has-bg-side {
     background-color:hsl(0, 0%, 86%);
 }
+
+.table__wrapper {
+    overflow-x: auto;
+  }
+

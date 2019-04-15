@@ -4,100 +4,97 @@
 
 <div class="column">
 
-    <!--My accounts section-->
+  <!--My accounts section-->
 
-    <div class=" column has-text-left is-size-4 ">
-        <p>Hello {{ request.user.phone_number}} Account Summary</p>
+
+  <div class="column has-text-left is-four-fifths ">    
+        <div class="container">
+          <h1 class="title">
+            Hello, {{request.user.last_name}}.
+          </h1>
+          <h2 class="subtitle">
+            I hope you are having a great day! Here's your account summary.
+          </h2>
+        </div>      
+  </div>
+
+  <div class="columns is-multiline">
+      <div class="column is-12-tablet is-6-desktop is-4-widescreen">
+      <div class="notification is-info has-text">
+        <p class="title is-medium">{{request.user.get_chamas}}</p>
+        <p class="subtitle is-small">My Chamas</p>
+      </div>
     </div>
-
-    <div class="columns is-multiline">
-        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
-            <div class="notification is-link has-text">
-                <p class="title is-1">23</p>
-                <p class="subtitle is-4">Orders</p>
-            </div>
-        </div>
-        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
-            <div class="notification is-info has-text">
-                <p class="title is-1">12</p>
-                <p class="subtitle is-4">My Chamas</p>
-            </div>
-        </div>
-        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
-            <div class="notification is-danger has-text">
-                <p class="title is-1">$1,678</p>
-                <p class="subtitle is-4">My Loans</p>
-            </div>
-        </div>
-        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
-            <div class="notification is-success has-text">
-                <p class="title is-1">$20,756</p>
-                <p class="subtitle is-4">My Savings</p>
-            </div>
-        </div>
+    <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+      <div class="notification is-danger has-text">
+        <p class="title is-medium">{{request.user.get_my_loans}}</p>
+        <p class="subtitle is-small">My Loans</p>
+      </div>
     </div>
-    <!--End my accounts-->
-    <div class="tabs is-toggle is-medium is-fullwidth">
-        <ul>
-            <li class="is-active"><a>My Chamas</a></li>
-            <li><a>Recent Transactions</a></li>
-
-        </ul>
+    <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+      <div class="notification is-success has-text">
+        <p class="title is-medium">KES {{ request.user.get_my_savings }}</p>
+        <p class="subtitle is-small">My Savings</p>
+      </div>
     </div>
+  </div>
+  <!--End my accounts-->
+  <div class=" column has-text-left">
+      <p class="is-size-3 ">Recent Transactions
+          
+        </p>
+  </div>
 
-    <!--Recent Transactions-->
-    <div class="column">
-            <table class="table is-hoverable is-fullwidth">
-                    <thead>
-                      <tr>
-                        <th>Transaction #</th>
-                        <th>Chama</th>
-                        <th>Date</th>
-                        <th>In Payment Of</th>
-                        <th class="has-text-right">Amount</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr>
-                            <th>Transaction #</th>
-                            <th>Chama</th>
-                            <th>Date</th>
-                            <th>In Payment Of</th>
-                            <th class="has-text-right">Amount</th>
-                      </tr>
-                    </tfoot>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <strong>MNDHKW7942</strong>
-                        </td>
-                        <td>
-                          <a href="edit-customer.html">Feminists United</a>
-                        </td>
-                        <td>Nov 18, 17:38</td>
-                        <td>
-                          <span class="tag is-warning">Fine</span>
-                        </td>
-                        <td class="has-text-right">$56.98</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <strong>MNS85308HR5</strong>
-                        </td>
-                        <td>
-                          <a href="edit-customer.html">Mafisi Sacco</a>
-                        </td>
-                        <td>Nov 16, 11:45</td>
-                         <td>
-                          <span class="tag is-success">Contribution</span>
-                        </td>
-                        <td class="has-text-right">$21.99</td>
-                      </tr>
-                    </tbody>
-        </table>
+  
+
+  <!--Recent Transactions-->
+  
+  <div class="column is-four-fifths ">
+    <div class="table__wrapper">
+    <table class="table is-hoverable is-fullwidth ">
+      <thead>
+        <tr>
+          <th>Transaction #</th>
+          <th>Chama</th>
+          <th>Date</th>
+          <th>In Payment Of</th>
+          <th class="has-text-right">Amount</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Transaction #</th>
+          <th>Chama</th>
+          <th>Date</th>
+          <th>In Payment Of</th>
+          <th class="has-text-right">Amount</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        {% for i in request.user.transactions.all %}
+        <tr>
+          <td>
+            <strong>{{i.id}}</strong>
+          </td>
+          <td>
+            <a href="{{ i.chama.get_absolute_url  }}">{{i.chama}}</a>
+          </td>
+          <td>{{i.transaction_time}}</td>
+          <td>
+            <span class="tag is-warning">
+              {{i.transaction_type}}
+            </span>
+          </td>
+          <td class="has-text-right">KES {{i.amount}}</td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
     </div>
+  </div>
 
-    <!--End recent transactions-->
+  <!--End recent transactions-->
 
 </div>
 
