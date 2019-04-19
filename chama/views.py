@@ -134,9 +134,9 @@ class TransactionCreate(CreateView):
         form.instance.transaction_time = timezone.now()
         form.instance.phone_number = phone
         form.instance.member = self.request.user
-        # callback_url = self.request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
-        # response = cl.stk_push(phone, int(amount), chama.groupName, description, callback_url)
-        # return HttpResponse(response.text)
+        callback_url = self.request.build_absolute_uri(reverse('mpesa_stk_push_callback'))
+        response = cl.stk_push(phone, int(amount), chama.groupName, description, callback_url)
+        return HttpResponse(response.text)
 
         return super().form_valid(form)
 
