@@ -5,7 +5,8 @@ from django.conf import settings
 from djmoney.models.fields import MoneyField
 import uuid
 from django.core.exceptions import ObjectDoesNotExist
-from datetime import timedelta
+from datetime import timedelta, date
+from django.utils import timezone
 import datetime
 import math
 
@@ -23,10 +24,8 @@ class Member(AbstractUser):
 
     def get_chamas(self):
         """Get all the chamas where the user is either an admin or a member"""
-        ismember = self.chama.all().count()
-        isadmin = self.admin.all().count()
-        total = isadmin + ismember
-        return total
+        ismember = self.membership_set.all().count()
+        return ismember
 
     def get_my_savings(self):
         """Get all the user's savings"""
@@ -62,10 +61,17 @@ class Chama(models.Model):
     contribution_amnt = models.DecimalField(
         max_digits=10, decimal_places=2)
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name='chama', blank=True)
-    contribution_interval = models.PositiveIntegerField()
+        settings.AUTH_USER_MODEL, related_name='chama', through='Membership', blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='admin')
+    PAYMENT_TYPE = (
+        ('d', 'Daily'),
+        ('w', 'Weekly'),
+        ('m', 'Monthly'),
+        ('q', 'Quartely')
+    )
+    contribution_interval = models.CharField(max_length=1, choices=PAYMENT_TYPE,
+                                             blank=True, default='d', help_text='Contribution Intervals')
 
     class Meta:
         ordering = ['groupName']
@@ -78,37 +84,12 @@ class Chama(models.Model):
 
     def get_members(self):
         """Get number of members"""
-        members = self.members.all().count() + 1
+        members = self.members.all().count()
         return members
 
     def get_admin(self):
         """Get admin"""
         return self.created_by
-
-    def get_arrears(self):
-        # get all payments that have been approved
-        # get all
-        pass
-
-    def member_shares(self, member):
-        """Get members equity in percentage"""
-        member = self.members.get(member)
-        member_transactions = self.transactions.filter(
-            member=member).filter(transaction_type='d')
-
-        # get total deposits for a single user
-        total = 0
-        for i in member_transactions:
-            amount = i.amount
-            total += amount
-        return total
-
-        # get percentage
-        balance = self.get_total_balance
-
-        shares = (total / balance) * 100
-        member_shares = math.trunc(2, shares)
-        return member_shares
 
     def get_total_balance(self):
         """Get account balance"""
@@ -143,6 +124,112 @@ class Chama(models.Model):
             total_loans += amount
         return total_loans
 
+    def get_member_deposits(self):
+        """deposits of an individual member to this chama"""
+        deposits = {}
+        for member in self. members.all():
+            transactions = member.transactions.filter(
+                chama=self).filter(transaction_type='d')
+            savings = 0
+            for transaction in transactions:
+                i = transaction.amount
+                savings += i
+            deposits[member] = savings
+        return deposits
+
+    def get_member_arrears(self):
+        """Arrears of an individual member to this chama"""
+        # get the member
+        records = {}
+        for member in self.members.all():
+            # get the day member joined the group
+            date_joined = member.date_joined
+            today = datetime.datetime.now(timezone.utc)
+            delta = today - date_joined
+
+            # get the number of days, weeks or months that have passed since then
+            days_passed = 10
+            weeks_passed = days_passed // 7
+            months_passed = days_passed // 30
+
+            # if monthly
+            if self.contribution_interval == 'm' and months_passed > 0:
+                # get the amount he should have contributed by now
+                deposits_by_now = self.contribution_amnt * months_passed
+                # get amount he has contributed so far
+                transactions = member.transactions.filter(
+                    chama=self).filter(transaction_type='d')
+                savings = 0
+                for transaction in transactions:
+                    i = transaction.amount
+                    savings += i
+
+                arrears = deposits_by_now - savings
+                records[member] = arrears
+
+            # if weekly
+            elif self.contribution_interval == 'w' and weeks_passed > 0:
+                # get the amount he should have contributed by now
+                deposits_by_now = self.contribution_amnt * weeks_passed
+                # get amount he has contributed so far
+                transactions = member.transactions.filter(
+                    chama=self).filter(transaction_type='d')
+                savings = 0
+                for transaction in transactions:
+                    i = transaction.amount
+                    savings += i
+
+                arrears = deposits_by_now - savings
+                records[member] = arrears
+
+            # if daily
+            elif self.contribution_interval == 'd' and days_passed > 0:
+
+                # get amount he has contributed so far
+                transactions = member.transactions.filter(
+                    chama=self).filter(transaction_type='d')
+                savings = 0
+                # get the amount he should have contributed by now
+                deposits_by_now = (self.contribution_amnt) * days_passed
+                for transaction in transactions:
+                    i = transaction.amount
+                    savings += i
+
+                arrears = deposits_by_now - savings
+                records[member] = arrears
+            else:
+                pass
+        return records
+
+
+class Membership(models.Model):
+    member = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, on_delete=models.CASCADE)
+    chama = models.ForeignKey(Chama, on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(auto_now_add=False)
+
+    # def get_my_chamasavings(self):
+    #     """Get all the user's savings in a chama"""
+    #     chama = self.chama
+    #     transactions = self.member.transactions.filter(chama=chama)
+    #     savings = 0
+    #     for transaction in transactions:
+    #         if transaction.transaction_type == 'd':
+    #             i = transaction.amount
+    #             savings += i
+
+    #     return savings
+
+    def get_my_chamaloans(self):
+        """Loans owed to a particular chama"""
+        loans = self.member.my_loan_requests.filter(
+            is_approved=True).filter(is_paid=False).filter(chama=self.chama)
+        total = 0
+        for loan in loans:
+            i = loan.amount
+            total += i
+        return total
+
 
 class Transaction(models.Model):
     """This model defines all the transactions that take place, e.g fines or deposits
@@ -170,11 +257,21 @@ class Transaction(models.Model):
     def __str__(self):
         return self.phone_number
 
-    def get_loans_total(self):
-        pass
+    def save(self, *args, **kwargs):
+        """Deduct paid loan"""
+        if self.transaction_type == 'l':
+            loans = LoanRequests.objects.filter(chama=self.chama).filter(
+                user=self.member).filter(is_approved=True)
 
-    def get_fines_total(self):
-        pass
+            for i in loans:
+                if i.amount > 0:
+                    amount = i.amount - self.amount
+                    i.amount = amount
+                    i.save()
+                else:
+                    i.is_paid = True
+                    i.save()
+        super().save(*args, **kwargs)
 
 
 class LoanRequests(models.Model):
@@ -185,7 +282,6 @@ class LoanRequests(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     chama = models.ForeignKey(
         Chama, on_delete=models.DO_NOTHING, related_name='loan_requests')
-    is_confirmed = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
 
     class Meta:

@@ -24,4 +24,5 @@ urlpatterns = [
     path('approve/<int:pk>', views.approveLoan, name='approve-loan'),
     # Meetings
     path('<uuid:pk>/setmeeting/', views.SetMeeting.as_view(), name='set-meeting'),
+    path('daraja/stk-push', views.stk_push_callback, name='mpesa_stk_push_callback'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

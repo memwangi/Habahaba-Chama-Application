@@ -65,7 +65,7 @@
                     <div class="tile is-parent">
                         <article class="tile is-child box">
                             <p class="title has-text-danger">
-                                KES {{ chama.total_approved_loans }}
+                                KES {{ chama.total_approved_loans|default_if_none:"0" }}
                             </p>
                             <p class="subtitle">Loans</p>
                         </article>
@@ -124,98 +124,60 @@
         <div class="container section">
             <!--Recent transactions-->
             <div class="content-tab" id="transactions">
-            <div class="column is-four-fifths">
-                <div class="column has-text-centered">
-                    <p class="title is-size-4">Most recent first</p>
-                </div>
-                <div class="table__wrapper">
-                    <table class="table is-hoverable is-fullwidth ">
-                        <thead>
-                            <tr>
-                                <th>Phone</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>In Payment Of</th>
-                                <th class="has-text-right">Amount</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Phone</th>
-                                <th>Name</th>
-                                <th>Date</th>
-                                <th>In Payment Of</th>
-                                <th class="has-text-right">Amount</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {% for i in chama.transactions.all %}
-                            <tr>
-                                <td>
-                                    <strong>{{ i.member.phone_number }}</strong>
-                                </td>
-                                <td>
-                                    <strong>{{ i.member.first_name }} {{ i.member.last_name }}</strong>
-                                </td>
-                                <td>{{ i.transaction_time }}</td>
-                                <td>
-                                    <span class="tag is-warning">
-                                        {{ i.transaction_type }}
-                                    </span>
-                                </td>
-                                <td class="has-text-right">KES {{ i.amount }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-            <!--End recent transactions-->
-            <div class="columns is-multiline is-mobile content-tab" id="members" style="display: none">
-                <!--Admin-->
-
-                <div class="column is-12-tablet is-6-desktop is-4-fullhd">
-                    <div class="card">
-                        <div class="card-content">
-                            <div class="media">
-                                <figure class="media-left">
-                                    <p class="image is-28x28">
-                                        <img src="https://bulma.io/images/placeholders/96x96.png"
-                                            alt="Placeholder image" />
-                                    </p>
-                                </figure>
-
-                                <div class="media-content">
-                                    <p class="title is-4">
-                                        {{ chama.created_by.first_name }}
-                                        {{ chama.created_by.last_name }}
-                                        <span class="tag is-info">Admin</span>
-                                    </p>
-                                    <p class="subtitle is-6">
-                                        {{ chama.created_by.phone_number }}
-                                    </p>
-                                    <p><span class="is-small is-info">Shares: 40%</span></p>
-                                </div>
-                            </div>
-                            <div class="media">
-                                <div class="media-left is-spaced">
-                                    <p class="has-text-danger is-medium is-spaced ">Loans</p>
-                                    <small class="">{{chama.created_by.get_my_loans}}</small>
-                                </div>
-
-                                <div class="media-content is-spaced">
-                                    <p class="has-text-link is-medium">Deposits</p>
-                                    <small class="">{{chama.created_by.get_my_savings}}</small>
-                                </div>
-                            </div>
-                        </div>
+                <div class="column is-four-fifths">
+                    <div class="column has-text-centered">
+                        <p class="title is-size-4">Most recent first</p>
+                    </div>
+                    <div class="table__wrapper">
+                        <table class="table is-hoverable is-fullwidth ">
+                            <thead>
+                                <tr>
+                                    <th>Phone</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>In Payment Of</th>
+                                    <th class="has-text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Phone</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>In Payment Of</th>
+                                    <th class="has-text-right">Amount</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for i in chama.transactions.all %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ i.member.phone_number }}</strong>
+                                    </td>
+                                    <td>
+                                        <strong>{{ i.member.first_name }} {{ i.member.last_name }}</strong>
+                                    </td>
+                                    <td>{{ i.transaction_time }}</td>
+                                    <td>
+                                        <span class="tag is-warning">
+                                            {{ i.transaction_type }}
+                                        </span>
+                                    </td>
+                                    <td class="has-text-right">KES {{ i.amount }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+
+            <!--End recent transactions-->
+            <div class="columns is-multilined content-tab" id="members" style="display: none">
 
                 <!--A group member-->
                 {% for member in chama.members.all %}
+
                 <div class="column is-12-tablet is-6-desktop is-4-fullhd">
                     <div class="card">
                         <div class="card-content">
@@ -230,27 +192,44 @@
                                 <div class="media-content">
                                     <p class="title is-4">
                                         {{ member.first_name }} {{ member.last_name }}
+                                        {% if chama.created_by == member %}
+                                        <span class="tag is-info">Admin</span>
+                                        {% endif %}
                                     </p>
                                     <p class="subtitle is-6">
                                         {{ member.phone_number }}
                                     </p>
-                                    <p><span class="is-small is-info">Shares: 40%</span></p>
+                                    <p><span class="is-small is-info"></span></p>
                                 </div>
                             </div>
                             <div class="media">
+                                
                                 <div class="media-left is-spaced">
-                                    <p class="has-text-link is-medium is-spaced ">Loans</p>
-                                    <small class="">{{member.get_my_loans}}</small>
+                                    
+                                    <p class="has-text-link is-medium is-spaced ">Arrears</p>
+                                    {% for key,value in arrears.items%}
+                                    {% if key == member %}
+                                    <small class="">{{ value|default_if_none:"0" }}</small>
+                                    {% endif %}
+                                    {% endfor %}
                                 </div>
+                                
 
                                 <div class="media-content is-spaced">
+                                    {% for key,value in deposits.items %}
+                                    {% if key == member%}
                                     <p class="has-text-link is-medium">Deposits</p>
-                                    <small class="">{{member.get_my_savings}}</small>
+                                    <small class="">{{ value|default_if_none:"0" }}</small>
+                                    {% endif  %}
+                                    {% endfor %}
                                 </div>
+                                
                                 {% if request.user == chama.get_admin %}
+                                    {% if chama.created_by != member %}
                                 <div class="media-right is-spaced">
                                     <a class="button is-link is-outlined"
                                         href="{% url  'remove-member' chama.pk member.phone_number %}">Remove</a>
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                             </div>

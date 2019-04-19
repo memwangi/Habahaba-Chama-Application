@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Member, Chama, Transaction, ChamaMeetings, LoanRequests
+from .models import Member, Chama, Transaction, ChamaMeetings, LoanRequests, Membership
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -55,7 +55,6 @@ class CreateChamaForm(ModelForm):
         help_texts = {'groupName': _('e.g Mapato Investment Group'),
                       'paybillNo': _('e.g 568942'),
                       'contribution_amnt': _('Amount member should contribute at a time'),
-                      'contribution_interval': _('Number of times contributions are sent in a month e.g 2')
                       }
 
     def clean_contribution_amnt(self):
@@ -73,15 +72,7 @@ class CreateChamaForm(ModelForm):
             raise ValidationError(_('Enter correct Paybill Number!'))
         return data
     
-    def clean_contribution_interval(self):
-
-        data = self.cleaned_data['contribution_interval']
-
-        if data >= 10:
-            raise ValidationError(_('Should be below 10'))
-        return data
-
-
+    
 class TransactionForm(ModelForm):
     class Meta:
         model = Transaction
