@@ -148,7 +148,7 @@ class Chama(models.Model):
             delta = today - date_joined
 
             # get the number of days, weeks or months that have passed since then
-            days_passed = 10
+            days_passed = delta.days
             weeks_passed = days_passed // 7
             months_passed = days_passed // 30
 
