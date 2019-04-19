@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 
 import os
+import django_heroku
 from decouple import config, Csv
 
 # The Mpesa environment to use
@@ -203,3 +204,4 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'donmwas007@gmail.com'
 EMAIL_HOST_PASSWORD = 'xldmrkoamluxavsf'
+django_heroku.settings(locals())
