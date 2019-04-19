@@ -43,7 +43,8 @@ class ChamaCreate(CreateView):
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         chama = form.save()
-        m1 = Membership.objects.create(member=self.request.user, chama=chama, date_joined=timezone.now())
+        m1 = Membership.objects.create(
+            member=self.request.user, chama=chama, date_joined=timezone.now())
         return super().form_valid(form)
 
 
@@ -59,7 +60,8 @@ class CurrentUserChamas(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Chama.objects.filter(created_by=self.request.user) | Chama.objects.filter(members__phone_number=self.request.user.phone_number)
+        return Chama.objects.filter(created_by=self.request.user) | Chama.objects.filter(
+            members__phone_number=self.request.user.phone_number)
 
 
 class ChamaListView(ListView):
@@ -68,7 +70,7 @@ class ChamaListView(ListView):
 
 class ChamaDetailView(DetailView):
     model = Chama
-   
+
     def get_context_data(self, **kwargs):
         chama = get_object_or_404(Chama, pk=self.kwargs['pk'])
         context = super(ChamaDetailView, self).get_context_data(**kwargs)
@@ -76,6 +78,7 @@ class ChamaDetailView(DetailView):
         context['deposits'] = chama.get_member_deposits
 
         return context
+
 
 @login_required
 def ChamaAddMember(request, pk):
@@ -89,9 +92,11 @@ def ChamaAddMember(request, pk):
             member = Member.objects.get(phone_number=phonenumber)
             date_joined = timezone.now()
             if member in chama.members.all():
-                messages.error(request, 'Oops, user is already a member of this group')
+                messages.error(
+                    request, 'Oops, user is already a member of this group')
             else:
-                m1 = Membership(member=member, chama=chama, date_joined=date_joined)
+                m1 = Membership(member=member, chama=chama,
+                                date_joined=date_joined)
                 m1.save()
                 url = chama.get_absolute_url()
                 return redirect(url)
@@ -99,6 +104,7 @@ def ChamaAddMember(request, pk):
     else:
         form = AddMemberForm()
     return render(request, 'chama/add_member.html', {'form': form, 'key': pk})
+
 
 def ChamaRemoveMember(request, pk, phone_number):
     chama = get_object_or_404(Chama, chama_id=pk)
@@ -133,6 +139,7 @@ class TransactionCreate(CreateView):
         # return HttpResponse(response.text)
 
         return super().form_valid(form)
+
 
 def stk_push_callback(request):
     # Notification received from MPESA here.
@@ -203,4 +210,3 @@ def approveLoan(request, pk):
     loan.is_approved = True
     loan.save()
     return redirect('chama_detail', chama)
-

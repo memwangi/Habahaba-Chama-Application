@@ -24,7 +24,7 @@ MPESA_ENVIRONMENT = 'sandbox'
 MPESA_CONSUMER_KEY = 'mpesa_consumer_key'
 MPESA_CONSUMER_SECRET = 'mpesa_consumer_secret'
 
-#Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
+# Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
 MPESA_SHORTCODE = 'mpesa_shortcode'
 
@@ -128,8 +128,6 @@ DATABASES = {
     }
 }
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -182,12 +180,12 @@ BULMA_SETTINGS = {
 LOGIN_REDIRECT_URL = '/'
 
 STATICFILES_FINDERS = [
-  # First add the two default Finders, since this will overwrite the default.
-  'django.contrib.staticfiles.finders.FileSystemFinder',
-  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # First add the two default Finders, since this will overwrite the default.
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 
-  # Now add our custom SimpleBulma one.
-  'django_simple_bulma.finders.SimpleBulmaFinder',
+    # Now add our custom SimpleBulma one.
+    'django_simple_bulma.finders.SimpleBulmaFinder',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
