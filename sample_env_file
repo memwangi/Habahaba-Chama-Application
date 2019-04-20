@@ -1,11 +1,12 @@
-SECRET_KEY=%a82194flhzim@(+--_6t6q=*t%x*erfyq2@4mex3u#=+mx56g
-DEBUG=True
-DB_NAME=habahabadb
-DB_USER=mwangi
-DB_PASSWORD=j00seph@01
+SECRET_KEY="Your Django secret key. You'll find it in settings.py"
+DEBUG="True or False"
+DB_NAME="Your database name, if you used PostgreSQL"
+DB_USER="Database User"
+DB_PASSWORD="User password"
 DB_HOST=127.0.0.1
 
 ALLOWED_HOSTS=127.0.0.1, chamaapp.herokuapp.com
+# MPESA Configuration variables
 
 # The Mpesa environment to use
 # Possible values: sandbox, production
@@ -14,21 +15,21 @@ MPESA_ENVIRONMENT=sandbox
 
 # Credentials for the daraja app
 
-MPESA_CONSUMER_KEY=8dGZh8csiOFojnZRgmGGKAH0eOAykJmk
-MPESA_CONSUMER_SECRET=CZAgtBzDq4vrczDa 
+MPESA_CONSUMER_KEY=mpesa_consumer_key
+MPESA_CONSUMER_SECRET=mpesa_consumer_secret
 
 #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
-MPESA_SHORTCODE=600203
+MPESA_SHORTCODE=mpesa_shortcode
 
 # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 # This only has a different value on sandbox, you do not need to set it on production
 # For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
 
-MPESA_EXPRESS_SHORTCODE=174379
+MPESA_EXPRESS_SHORTCODE=mpesa_express_shortcode
 
 #Type of shortcode
-# Possible values:
+# Possible values: 
 # - paybill (For Paybill)
 # - till_number (For Buy Goods Till Number)
 
@@ -38,8 +39,7 @@ MPESA_SHORTCODE_TYPE=paybill
 # Sandbox passkey is available on test credentials page
 # Production passkey is sent via email once you go live
 
-MPESA_PASSKEY=bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919
-
+MPESA_PASSKEY=mpesa_passkey
 # Others
-EMAIL_HOST_USER = 'donmwas007@gmail.com'
-EMAIL_HOST_PASSWORD = 'xldmrkoamluxavsf'
+EMAIL_HOST_USER = 'For sending emails. If you're using gmail, you need two factor authentication and an app password.'
+EMAIL_HOST_PASSWORD = '16-digit code that's your gmail app password'
